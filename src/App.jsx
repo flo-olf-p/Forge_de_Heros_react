@@ -1,19 +1,19 @@
 import { useState } from "react";
-import ListePersonnages from "./components/ListePersonnages";
-import DetailPersonnage from "./components/DetailPersonnage";
+import CharacterList from "./components/CharacterList";
+import DetailCharacter from "./components/DetailCharacter";
 import "./App.css";
 
 function App() {
-  const [personnageSelectionne, setPersonnageSelectionne] = useState(null);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   return (
     <div>
-      {!personnageSelectionne ? (
-        <ListePersonnages auClic={(p) => setPersonnageSelectionne(p.id)} />
+      {!selectedCharacter ? (
+        <CharacterList onClick={(p) => setSelectedCharacter(p.id)} />
       ) : (
-        <DetailPersonnage
-          idPersonnage={personnageSelectionne}
-          retour={() => setPersonnageSelectionne(null)}
+        <DetailCharacter
+          idCharacter={selectedCharacter}
+          back={() => setSelectedCharacter(null)}
         />
       )}
     </div>
