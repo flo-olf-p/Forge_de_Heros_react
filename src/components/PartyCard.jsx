@@ -5,19 +5,23 @@ export default function PartyCard({party, setRouting}) {  // props est ici la li
             <p>{party.description}</p>{/*description du groupe*/}
             <p>Nombre de personnages maximum : {party.maxSize}</p> {/*places du groupe*/}
             <ul>
-                {party.members.map((member) => (
-                    <li key={member.id}>
-                        <button onClick={
-                            (e) => {
-                                e.preventDefault();
-                                setRouting("user/"+member.id);
-                            }
-                        }>
-                            {member.name}
+                {party.characters.map((character) => (
+                    <li key={character.id}>
+                        <button onClick={ (e) => {
+                            e.preventDefault();
+                            setRouting("character/"+character.id);
+                        }}>
+                            {character.name}
                         </button>
                     </li>
                 ))}
             </ul>
+            <button onClick={ (e) => {
+                e.preventDefault();
+                setRouting("parties");
+            }}>
+                Retour
+            </button>
         </div>
     );
 }
