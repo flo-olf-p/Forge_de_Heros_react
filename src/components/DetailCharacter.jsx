@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
 
-export default function DetailCharacter({ idCharacter, back }) {
+export default function DetailCharacter({ idCharacter, setSelectedCharacter, setRouting, origin }) {
   const [character, setCharacter] = useState(null);
 
   useEffect(() => {
@@ -90,7 +90,12 @@ export default function DetailCharacter({ idCharacter, back }) {
 
   return (
     <div>
-      <button onClick={back}>Retour</button>
+      <button onClick={(e) => {//bouton de retour
+        e.preventDefault();
+        setSelectedCharacter(null);
+        setRouting(origin);
+      }}>Retour
+      </button>
 
       <h1>{character.name}</h1>
       <img src={character.image} width="150" />

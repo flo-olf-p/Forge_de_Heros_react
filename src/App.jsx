@@ -2,25 +2,8 @@ import { useState } from "react";
 import CharacterList from "./components/CharacterList";
 import DetailCharacter from "./components/DetailCharacter";
 import "./App.css";
-
-function App() {
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
-
-  return (
-    <div>
-      {!selectedCharacter ? (
-        <CharacterList onClick={(p) => setSelectedCharacter(p.id)} />
-      ) : (
-        <DetailCharacter
-          idCharacter={selectedCharacter}
-          back={() => setSelectedCharacter(null)}
-        />
-      )}
-    </div>
-  );
 import './App.css'
 import PartyCard from "./components/PartyCard.jsx";
-import {useState} from "react";
 import PartiesList from "./components/PartiesList.jsx";
 
 const party1 = {
@@ -88,9 +71,13 @@ const party3 = {
 
 const parties = [party1, party2, party3];
 
+//TODO - utiliser un state pour l'id de la party aussi plutôt que du parsing
 function App() {
     const [routing, setRouting] = useState("home")
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
     console.log(routing)
+
+    let origin = "home";//pour savoir comment changer routing quand on clique sur un "retour" (la route précédente).
 
     if (routing === "home") {
         return (
@@ -102,6 +89,12 @@ function App() {
                 }}>
                     Liste des groupes
                 </button>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    setRouting("characters");
+                }}>
+                    Liste des personnages
+                </button>
             </div>
         )
     }
@@ -109,15 +102,13 @@ function App() {
         const id = routing.match(/(\d+)/);//regex pour parser l'id à la fin de routing
         if (id) {// si il y a bien un id dans routing (not null)
             const partyId = parseInt(id[0], 10);// on en fait un number
-            console.log(partyId);
             if (partyId != null) {// si on arrive à en faire un nombre
                 for (let i = 0; i < parties.length; i++) {// avec un for(... in ...), ça ne marche pas
-                    console.log("party.id = "+parties[i].id);
                     if (parties[i].id === partyId) {
-                        console.log("oui");
+                        console.log(origin);
                         return (
                             <div>
-                                <PartyCard party={parties[i]} setRouting={setRouting}/>
+                                <PartyCard party={parties[i]} setRouting={setRouting} setCharacter={setSelectedCharacter}/>
                             </div>
                         )
                     }
@@ -125,6 +116,8 @@ function App() {
             }
         }
         else {// si pas d'id, on rend la liste des parties
+            origin = "parties";
+            console.log(origin);
             return (
                 <div>
                     <PartiesList parties={parties} setRouting={setRouting}/>
@@ -132,33 +125,24 @@ function App() {
             );
         }
     }
-    // else if (routing.includes("character")) {
-    //     const id = routing.match(/(\d+)/);//regex pour parser l'id à la fin de routing
-    //     if (id) {// si il y a bien un id dans routing (not null)
-    //         const characterId = parseInt(id[0], 10);// on en fait un number (base 10)
-    //         console.log(characterId);
-    //         if (characterId != null) {// si on arrive à en faire un nombre
-    //             for (let i = 0; i < characters.length; i++) {// avec un for(... in ...), ça ne marche pas
-    //                 console.log("party.id = "+characters[i].id);
-    //                 if (characters[i].id === characterId) {
-    //                     console.log("oui");
-    //                     return (
-    //                         <div>
-    //                             <CharacterCard character={parties[i]} setRouting={setRouting}/>
-    //                         </div>
-    //                     )
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     else {// si pas d'id, on rend la liste des parties
-    //         return (
-    //             <div>
-    //                 <CharactersList characters={characters} setRouting={setRouting}/>
-    //             </div>
-    //         );
-    //     }
-    // }
+    else if (routing.includes("characters")) {
+        return (
+            <div>
+                {!selectedCharacter ? (
+                    origin="characters",
+                    <CharacterList onClick={(p) => setSelectedCharacter(p.id)}/>
+                ) : (
+                    origin="characters/"+selectedCharacter.id,
+                    <DetailCharacter
+                        idCharacter={selectedCharacter}
+                        setSelectedCharacter={setSelectedCharacter}
+                        setRouting={setRouting}
+                        origin={origin}
+                    />
+                )}
+            </div>
+        );
+    }
 }
 
 export default App;
