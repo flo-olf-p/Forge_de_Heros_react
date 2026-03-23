@@ -5,7 +5,6 @@ export default function DetailCharacter({ idCharacter, back }) {
   const [character, setCharacter] = useState(null);
 
   useEffect(() => {
-    // Mock data for testing
     const mockCharacters = [
       {
         id: 1,
