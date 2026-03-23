@@ -2,25 +2,8 @@ import { useState } from "react";
 import CharacterList from "./components/CharacterList";
 import DetailCharacter from "./components/DetailCharacter";
 import "./App.css";
-
-function App() {
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
-
-  return (
-    <div>
-      {!selectedCharacter ? (
-        <CharacterList onClick={(p) => setSelectedCharacter(p.id)} />
-      ) : (
-        <DetailCharacter
-          idCharacter={selectedCharacter}
-          back={() => setSelectedCharacter(null)}
-        />
-      )}
-    </div>
-  );
 import './App.css'
 import PartyCard from "./components/PartyCard.jsx";
-import {useState} from "react";
 import PartiesList from "./components/PartiesList.jsx";
 
 const party1 = {
@@ -30,8 +13,8 @@ const party1 = {
     maxSize: 3,
     characters: [
         {
-            id: 10,
-            name: 'member10',
+            id: 1,
+            name: 'member1',
         },
         {
             id: 2,
@@ -43,7 +26,6 @@ const party1 = {
         }
     ]
 };
-
 const party2 = {
     id: 2,
     name: 'myParty',
@@ -64,7 +46,6 @@ const party2 = {
         }
     ]
 };
-
 const party3 = {
     id: 3,
     name: 'my_party',
@@ -85,12 +66,83 @@ const party3 = {
         }
     ]
 };
-
 const parties = [party1, party2, party3];
 
+const characters = [
+    {
+        id: 1,
+        name: "Aragorn",
+        image: "https://via.placeholder.com/150",
+        characterClass: { name: "Guerrier" },
+        race: { name: "Humain" },
+        level: 10,
+        strength: 16,
+        dexterity: 14,
+        constitution: 15,
+        intelligence: 12,
+        wisdom: 13,
+        charisma: 17,
+        healthPoints: 120,
+        skills: [
+            { id: 1, name: "Combat à l'épée", ability: "STR" },
+            { id: 2, name: "Endurance", ability: "CON" }
+        ],
+        parties: [
+            { id: 1, name: "La Communauté de l'Anneau" }
+        ]
+    },
+    {
+        id: 2,
+        name: "Legolas",
+        image: "https://via.placeholder.com/150",
+        characterClass: { name: "Archer" },
+        race: { name: "Elfe" },
+        level: 9,
+        strength: 12,
+        dexterity: 18,
+        constitution: 13,
+        intelligence: 14,
+        wisdom: 15,
+        charisma: 16,
+        healthPoints: 95,
+        skills: [
+            { id: 3, name: "Tir à l'arc", ability: "DEX" },
+            { id: 4, name: "Furtivité", ability: "DEX" }
+        ],
+        parties: [
+            { id: 1, name: "La Communauté de l'Anneau" }
+        ]
+    },
+    {
+        id: 3,
+        name: "Gandalf",
+        image: "https://via.placeholder.com/150",
+        characterClass: { name: "Mage" },
+        race: { name: "Humain" },
+        level: 15,
+        strength: 10,
+        dexterity: 12,
+        constitution: 14,
+        intelligence: 18,
+        wisdom: 17,
+        charisma: 16,
+        healthPoints: 110,
+        skills: [
+            { id: 5, name: "Magie", ability: "INT" },
+            { id: 6, name: "Sagesse", ability: "WIS" }
+        ],
+        parties: [
+            { id: 1, name: "La Communauté de l'Anneau" }
+        ]
+    }
+];
+
+//TODO - utiliser un state pour l'id de la party aussi plutôt que du parsing
 function App() {
     const [routing, setRouting] = useState("home")
-    console.log(routing)
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
+    const [selectedParty, setSelectedParty] = useState(null);
+    console.log("routing="+routing);
 
     if (routing === "home") {
         return (
@@ -102,63 +154,55 @@ function App() {
                 }}>
                     Liste des groupes
                 </button>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    setRouting("characters");
+                }}>
+                    Liste des personnages
+                </button>
             </div>
         )
     }
     else if (routing.includes("parties")) {
-        const id = routing.match(/(\d+)/);//regex pour parser l'id à la fin de routing
-        if (id) {// si il y a bien un id dans routing (not null)
-            const partyId = parseInt(id[0], 10);// on en fait un number
-            console.log(partyId);
-            if (partyId != null) {// si on arrive à en faire un nombre
-                for (let i = 0; i < parties.length; i++) {// avec un for(... in ...), ça ne marche pas
-                    console.log("party.id = "+parties[i].id);
-                    if (parties[i].id === partyId) {
-                        console.log("oui");
-                        return (
-                            <div>
-                                <PartyCard party={parties[i]} setRouting={setRouting}/>
-                            </div>
-                        )
-                    }
-                }
-            }
-        }
-        else {// si pas d'id, on rend la liste des parties
-            return (
-                <div>
-                    <PartiesList parties={parties} setRouting={setRouting}/>
-                </div>
-            );
-        }
+        return (
+            <div>
+                {!selectedParty ? (
+                    <PartiesList
+                        parties={parties}
+                        setRouting={setRouting}
+                        setSelectedParty={setSelectedParty}
+                    />
+                ) : (
+                    <PartyCard
+                        party={selectedParty}
+                        setRouting={setRouting}
+                        setSelectedCharacter={setSelectedCharacter}
+                        setSelectedParty={setSelectedParty}
+                    />
+                )}
+            </div>
+        );
     }
-    // else if (routing.includes("character")) {
-    //     const id = routing.match(/(\d+)/);//regex pour parser l'id à la fin de routing
-    //     if (id) {// si il y a bien un id dans routing (not null)
-    //         const characterId = parseInt(id[0], 10);// on en fait un number (base 10)
-    //         console.log(characterId);
-    //         if (characterId != null) {// si on arrive à en faire un nombre
-    //             for (let i = 0; i < characters.length; i++) {// avec un for(... in ...), ça ne marche pas
-    //                 console.log("party.id = "+characters[i].id);
-    //                 if (characters[i].id === characterId) {
-    //                     console.log("oui");
-    //                     return (
-    //                         <div>
-    //                             <CharacterCard character={parties[i]} setRouting={setRouting}/>
-    //                         </div>
-    //                     )
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     else {// si pas d'id, on rend la liste des parties
-    //         return (
-    //             <div>
-    //                 <CharactersList characters={characters} setRouting={setRouting}/>
-    //             </div>
-    //         );
-    //     }
-    // }
+    else if (routing.includes("characters")) {
+        return (
+            <div>
+                {!selectedCharacter ? (
+                    <CharacterList
+                        characters={characters}
+                        setSelectedCharacter={setSelectedCharacter}
+                        setRouting={setRouting}
+                        setSelectedParty={setSelectedParty}
+                    />
+                ) : (
+                    <DetailCharacter
+                        character={selectedCharacter}
+                        setSelectedCharacter={setSelectedCharacter}
+                        setRouting={setRouting}
+                    />
+                )}
+            </div>
+        );
+    }
 }
 
 export default App;
