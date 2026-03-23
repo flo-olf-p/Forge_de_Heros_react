@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import API from "../services/api";
 import CharacterCard from "./CharacterCard";
 
-export default function CharacterList({ onClick }) {
-  const [characters, setCharacters] = useState([]);
+export default function CharacterList({ characters, setSelectedCharacter, setRouting }) {
   const [search, setSearch] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
   const [selectedRace, setSelectedRace] = useState("");
@@ -53,11 +52,16 @@ export default function CharacterList({ onClick }) {
         <option value="level">Trier par niveau</option>
       </select>
 
-      <div className="grid"></div>
+      <button onClick={ (e) => {
+          e.preventDefault();
+          setRouting("home");
+      }}>
+          Accueil
+      </button>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
         {filteredCharacters.map(character => (
-          <CharacterCard key={character.id} character={character} onClick={onClick} />
+          <CharacterCard character={character} setSelectedCharacter={setSelectedCharacter} />
         ))}
       </div>
     </div>

@@ -1,4 +1,4 @@
-export default function PartyCard({party, setRouting, setCharacter}) {  // props est ici la liste des membres du groupe
+export default function PartyCard({party, setRouting, setSelectedCharacter, setSelectedParty}) {  // props est ici la liste des membres du groupe
     return (
         <div className="card">
             <h2>{party.name}</h2> {/*nom du groupe*/}
@@ -10,7 +10,7 @@ export default function PartyCard({party, setRouting, setCharacter}) {  // props
                         <button onClick={ (e) => {
                             e.preventDefault();
                             setRouting("character/"+character.id);
-                            setCharacter(character.id);
+                            setSelectedCharacter(character.id);
                         }}>
                             {character.name}
                         </button>
@@ -20,8 +20,9 @@ export default function PartyCard({party, setRouting, setCharacter}) {  // props
             <button onClick={ (e) => {
                 e.preventDefault();
                 setRouting("parties");
+                setSelectedParty(null);
             }}>
-                Retour
+                Retour à la liste des groupes
             </button>
         </div>
     );

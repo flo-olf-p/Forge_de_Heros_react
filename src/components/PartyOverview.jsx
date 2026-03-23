@@ -1,10 +1,11 @@
-export default function PartyCard({party, setRouting}) {  // props est ici la liste des membres du groupe
+export default function PartyCard({party, setRouting, setSelectedParty}) {  // props est ici la liste des membres du groupe
     if (party.characters.length === party.maxSize) {
         return (
             <div className="card">
                 <button onClick={(e) => {
                     e.preventDefault();
                     setRouting("parties/" + party.id);
+                    setSelectedParty(party);
                 }}>
                     {party.name} {/*nom du groupe*/}
                 </button>
@@ -20,6 +21,7 @@ export default function PartyCard({party, setRouting}) {  // props est ici la li
                 <button onClick={(e) => {
                     e.preventDefault();
                     setRouting("parties/" + party.id);
+                    setSelectedParty(party);
                 }}>
                     {party.name} {/*nom du groupe*/}
                 </button>
