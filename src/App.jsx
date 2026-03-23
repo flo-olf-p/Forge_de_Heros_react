@@ -5,9 +5,9 @@ import PartiesList from "./components/PartiesList.jsx";
 
 const party1 = {
     id: 1,
-    name: 'group',
+    name: 'party1',
     description: 'Group description',
-    maxSize: 5,
+    maxSize: 3,
     characters: [
         {
             id: 10,
@@ -26,7 +26,7 @@ const party1 = {
 
 const party2 = {
     id: 2,
-    name: 'group',
+    name: 'myParty',
     description: 'Group description',
     maxSize: 8,
     characters: [
@@ -47,7 +47,7 @@ const party2 = {
 
 const party3 = {
     id: 3,
-    name: 'group',
+    name: 'my_party',
     description: 'Group description',
     maxSize: 10,
     characters: [
