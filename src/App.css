@@ -1,0 +1,134 @@
+/* App global reset + typographie */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { min-height: 100%; }
+body {
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(140deg, #0e142f 0%, #181f42 45%, #0c162b 100%);
+  color: #e8ebff;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+:root {
+  --surface: rgba(13, 21, 48, 0.76);
+  --surface-2: rgba(18, 30, 66, 0.9);
+  --border: rgba(165, 186, 255, 0.45);
+  --accent: #8eabff;
+  --accent-soft: rgba(142, 171, 255, 0.33);
+  --text: #ecf0ff;
+  --muted: #bbc5f6;
+  --danger: #f38282;
+  --success: #68e2a4;
+}
+
+#root > div {
+  max-width: 1180px;
+  margin: 1.2rem auto;
+  padding: 1.2rem;
+  background: radial-gradient(circle at top left, rgba(27, 38, 82, 0.9), rgba(12, 18, 35, 0.75));
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 16px 36px rgba(2, 7, 22, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+h1, h2, h3 { font-weight: 700; text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35); }
+h1 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); margin-bottom: 0.8rem; }
+h2 { font-size: clamp(1.25rem, 2.2vw, 1.9rem); margin: 1.0rem 0 0.6rem; }
+
+p, li, span { color: var(--text); }
+
+button, input, select {
+  border-radius: 0.65rem;
+  border: 1px solid var(--border);
+  background: rgba(18, 29, 64, 0.85);
+  color: var(--text);
+  padding: 0.62rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease, background 220ms ease;
+}
+button:hover, input:hover, select:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(41, 82, 187, 0.35); }
+button:active { transform: translateY(0); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid #aac6ff; outline-offset: 2px; }
+
+input, select { width: min(100%, 315px); margin-bottom: 0.8rem; }
+button + button { margin-left: 0.7rem; }
+
+/* Page layout */
+.page-inner, .card-grid, .detail-grid {
+  display: grid;
+  gap: 1rem;
+}
+.card-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.detail-grid { grid-template-columns: 1fr; }
+
+/* Card style pour tous les blocs existants */
+.card, div > ul, div > div, li > div, .CharacterCard, .PartyCard {
+  background: linear-gradient(150deg, rgba(32, 51, 104, 0.92), rgba(17, 27, 59, 0.83));
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  box-shadow: 0 10px 24px rgba(1, 6, 26, 0.42);
+  padding: 0.92rem;
+}
+
+img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(191, 205, 255, 0.5);
+  margin-bottom: 0.7rem;
+  object-fit: cover;
+}
+
+button[type='button'], .card button, button {
+  background: linear-gradient(120deg, #7f9cff 0%, #7a8fff 100%);
+  border: 1px solid rgba(132, 149, 255, 0.55);
+  color: #0f1f55;
+  font-weight: 700;
+}
+
+button[type='button']:hover, .card button:hover, button:hover {
+  background: linear-gradient(135deg, #adc7ff 0%, #8fb1ff 100%);
+}
+
+p + p, ul + p, h2 + p { margin-top: 0.45rem; }
+ul { list-style: none; padding-left: 0; margin-top: 0.5rem; }
+li { margin: 0.35rem 0; }
+
+.barre {
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(18, 30, 69, 0.82);
+  overflow: hidden;
+  margin: 0.35rem 0 0.75rem;
+}
+.barre-remplie { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #55d5eb, #3082ff); transition: width 0.35s ease; }
+
+/* Etats speciaux */
+.badge, .status, .info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.83rem;
+}
+.status.full { background: rgba(255, 100, 100, 0.15); color: var(--danger); }
+.status.open { background: rgba(95, 192, 137, 0.17); color: var(--success); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  #root > div { margin: 0.8rem 0.65rem; padding: 0.9rem; }
+  .card-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  input, select { width: 100%; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 0.95rem; }
+  h1 { font-size: 1.35rem; }
+  h2 { font-size: 1.05rem; }
+  #root > div { margin: 0.55rem; padding: 0.7rem; }
+}

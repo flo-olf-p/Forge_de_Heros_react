@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import CharacterList from "./components/CharacterList";
 import DetailCharacter from "./components/DetailCharacter";
 import "./App.css";
-import './App.css'
 import PartyCard from "./components/PartyCard.jsx";
 import PartiesList from "./components/PartiesList.jsx";
 
