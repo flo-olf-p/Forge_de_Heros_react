@@ -1,6 +1,6 @@
 import API from "../services/api";
 
-export default function DetailCharacter({ character, setSelectedCharacter, setRouting }) {
+export default function DetailCharacter({ character, setSelectedCharacter, setSelectedParty, setRouting }) {
 
   if (!character) return <p>Chargement...</p>;
 
@@ -18,7 +18,7 @@ export default function DetailCharacter({ character, setSelectedCharacter, setRo
       <h1>{character.name}</h1>
       <img src={character.image} width="150" alt={"Portrait de "+character.name} />
 
-      <p>Classe : {character.characterClass?.name}</p>
+      <p>Classe : {character.class_character?.name}</p>
       <p>Race : {character.race?.name}</p>
       <p>Niveau : {character.level}</p>
       <p>Points de vie : {character.healthPoints}</p>
@@ -43,7 +43,7 @@ export default function DetailCharacter({ character, setSelectedCharacter, setRo
 
       <h2>Compétences</h2>
       <ul>
-        {character.characterClass?.skills?.map(skill => (
+        {character.class_character?.skill_characterClass?.map(skill => (
           <li key={skill.id}>
             {skill.name} ({skill.ability})
           </li>
@@ -61,8 +61,16 @@ export default function DetailCharacter({ character, setSelectedCharacter, setRo
         e.preventDefault();
         setRouting("characters");
         setSelectedCharacter(null);
+        setSelectedParty(null);
       }}>
         Retour à la liste des personnages
+      </button>
+      <button onClick={ (e) => {
+          e.preventDefault();
+          setRouting("parties");
+          setSelectedCharacter(null);
+      }}>
+          Accès au(x) groupe(s)
       </button>
     </div>
   );

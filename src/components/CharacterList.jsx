@@ -13,7 +13,7 @@ export default function CharacterList({ characters, setSelectedCharacter, setRou
       character.name.toLowerCase().includes(search.toLowerCase())
     )
     .filter(character =>
-      selectedClass ? character.characterClass?.name === selectedClass : true
+      selectedClass ? character.class_character?.name === selectedClass : true
     )
     .filter(character =>
       selectedRace ? character.race?.name === selectedRace : true
@@ -24,7 +24,7 @@ export default function CharacterList({ characters, setSelectedCharacter, setRou
       return 0;
     });
 
-  const classes = [...new Set(characters.map(character => character.characterClass?.name))];
+  const classes = [...new Set(characters.map(character => character.class_character?.name))];
   const races = [...new Set(characters.map(character => character.race?.name))];
 
   return (
@@ -61,7 +61,7 @@ export default function CharacterList({ characters, setSelectedCharacter, setRou
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
         {filteredCharacters.map(character => (
-          <CharacterCard character={character} setSelectedCharacter={setSelectedCharacter} />
+          <CharacterCard character={character} setSelectedCharacter={setSelectedCharacter} setRouting={setRouting} />
         ))}
       </div>
     </div>

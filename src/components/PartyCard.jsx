@@ -1,3 +1,5 @@
+import CharacterCard from "./CharacterCard.jsx";
+
 export default function PartyCard({party, setRouting, setSelectedCharacter, setSelectedParty}) {  // props est ici la liste des membres du groupe
     return (
         <div className="card">
@@ -7,13 +9,7 @@ export default function PartyCard({party, setRouting, setSelectedCharacter, setS
             <ul>
                 {party.characters.map((character) => (
                     <li key={character.id}>
-                        <button onClick={ (e) => {
-                            e.preventDefault();
-                            setRouting("character/"+character.id);
-                            setSelectedCharacter(character.id);
-                        }}>
-                            {character.name}
-                        </button>
+                        <CharacterCard character={character} setSelectedCharacter={setSelectedCharacter} setRouting={setRouting} />
                     </li>
                 ))}
             </ul>
