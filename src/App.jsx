@@ -142,11 +142,13 @@ function App() {
     const [selectedParty, setSelectedParty] = useState(null);
     console.log("routing="+routing);
 
+    const [characters, setCharacters] = useState([]);
+    const [parties, setParties] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    let characters = [];
     useEffect(() => {// pour charger les characters depuis l'API
-        fetch("http://localhost:8000/api/v1/characters")
+        fetch("http://127.0.0.1:8000/api/v1/characters")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Erreur réseau");
@@ -154,7 +156,7 @@ function App() {
                 return response.json();
             })
             .then((data) => {
-                characters = data;// TODO - utiliser un hook pour ne pas fetch à chaque fois
+                setCharacters(data);
                 setLoading(false);
             })
             .catch((err) => {
@@ -163,9 +165,8 @@ function App() {
             });
     }, []); // [] = une seule fois au chargement
 
-    let parties = [];
     useEffect(() => {// pour charger les parties depuis l'API
-        fetch("http://localhost:8000/api/v1/parties")
+        fetch("http://127.0.0.1:8000/api/v1/parties")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Erreur réseau");
@@ -173,7 +174,7 @@ function App() {
                 return response.json();
             })
             .then((data) => {
-                parties = data;// TODO - utiliser un hook pour ne pas fetch à chaque fois
+                setParties(data);
                 setLoading(false);
             })
             .catch((err) => {
